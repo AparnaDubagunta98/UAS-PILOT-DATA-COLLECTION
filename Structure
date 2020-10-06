@@ -1,1 +1,83 @@
+Launcher : launcher.sh
+A1.1 - Shell code - launcher to start device
+
+A0 UAS.py
+Imports:
+  ErrorHandling - A5
+Main:
+  Call A1
+  Call A2,A3
+  ## data is common ##
+  Call A4
+  
+
+A1 - DeviceInitialization.py
+Imports:
+  ErrorHandling
+Function Definitions:
+  A1.2 - A1.6: individual functions ; if error : call corresponding error function
+  A1.7 - upon success light led to green
+  Error handling
+
+Main:
+  Call A1.2 - A1.7
+  # Return control to UAS.py
+
+A2,A3 Recording.py
+  Function Defintiions:
+    2.1 Get time
+    2.2 Start Recording 
+    2.3 Chnge LED to red (now recording)
+    --- common var : time stamp, video streams --- 
+    3.1 Press button to stop ; Save files ; Get Stop time
+    3.2 Verify 
+    3.3 change LED to Blue (now processing)
+    
+  Main:
+    Setup streams
+    Define button
+    Call 2.1 - 3.3 
+    ## 2 video files in localVids ##
+    # Return control to UAS.py
+    
+
+A4 Processing.py
+Function Definitions:
+  4.1 Sync with ffmpeg
+  4.2 Verify synced on SD
+  4.3 Export (3 files) 
+      Copy of Error Log 
+Main:
+  Call 4.1-4.3
+  # Return control to UAS.py
+  
+  
+A5 ErrorHandling.py 
+Function Definitions:
+  Error5.1-5.6:
+    Error log update
+    Change LED pattern
+    Call UpdateErrorLog(time,ErrorName)
+    
+  UpdateErrorLog:
+    Take Time Stamp + Error Name
+ 
+
+led.py
+Input : on/off, rgb 
+
+#button.py
+  #Detect pressed / not pressed
+ 
+data.py
+  VideoData:
+    Name of files  -- 2 paths (FaceCamRaw & TabletCamRaw )
+    Start time
+    Stop Time
+
+
+
+  
+  
+
 

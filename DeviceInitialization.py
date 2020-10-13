@@ -6,14 +6,21 @@
 #  A1.7 - upon success light led to green
 #  Error handling
 
+
 import ErrorHandling
+from vidgear.gears import VideoGear
+import os
 
 #A1.2
 def detectFaceCam():
+    video_streams = []
+    options_picam = {"exposure_mode": "auto", "iso": 1800, "exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}
     try :
+        video_streams.push(VideoGear(source=2, resolution=(1920,1080), **options_picam).start())
         print("detectFaceCam")
     except:
         ErrorHandling.errorFaceCam()
+    video_streams[0].stop()
 
 #A1.3
 def detectTabletCam():
@@ -44,3 +51,9 @@ def prepLocalStorage():
 def finishInitialization():
     print("finishInitialization")
 
+detectFaceCam()
+detectTabletCam()
+detectExternalUSB()
+verifyStorageCapacity()
+prepLocalStorage()
+finishInitialization()

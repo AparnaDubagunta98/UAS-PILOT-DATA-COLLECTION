@@ -9,23 +9,31 @@
 
 import ErrorHandling
 from vidgear.gears import VideoGear
+from vidgear.gears import PiGear
+import cv2
 import os
 
 #A1.2
 def detectFaceCam():
-    video_streams = []
-    options_picam = {"exposure_mode": "auto", "iso": 1800, "exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}
+
+    options_picam = {"iso": 1800, "exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}
+
     try :
-        video_streams.push(VideoGear(source=2, resolution=(1920,1080), **options_picam).start())
+        video_stream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
         print("detectFaceCam")
+        video_stream.stop()
     except:
         ErrorHandling.errorFaceCam()
-    video_streams[0].stop()
 
 #A1.3
 def detectTabletCam():
+
+    options_webcam = {"iso": 100, "exposure_compensation": 0, "awb_mode": "sun", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080, "CAP_PROP_AUTOFOCUS": 'True'} # define tweak parameters
+
     try :
+        video_streams = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
         print("detectTabletCam")
+        video_stream.stop()
     except:
         ErrorHandling.errorTabletCam()
 

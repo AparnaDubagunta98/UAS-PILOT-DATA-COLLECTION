@@ -41,7 +41,7 @@ for disk in output:
         usb_drive = disk
         print("USB drive exists")
         diskExists = True
-        
+
 if (not diskExists):
     errorOut.write(3, "USB drive not detected!")
 
@@ -52,7 +52,7 @@ if int(usb_drive.split()[4][:-1]) >= threshold:
 if count >= 1:
     errorOut.write(4, "USB drive exceeds threshold! Reduce capacity.")
 ################################ END CAPACITY CHECK ###############################
-    
+
 ###################################### SETUP ######################################
 # Options for each camera
 options_picam = {"exposure_mode": "auto", "iso": 1800, "exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080} # define tweak parameters
@@ -66,11 +66,11 @@ video_streams = []
 
 # Create an initial set of streams to both test connections and do initial setup
 try:
-    video_streams.append(VideoGear(source=2, resolution=(1280,720), **options_picam).start()) 
+    video_streams.append(VideoGear(source=2, resolution=(1280,720), **options_picam).start())
 except:
     errorOut.write(1, "PiCamera not Detected")
 try:
-    video_streams.append(VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()) 
+    video_streams.append(VideoGear(source=0, resolution=(1920,1080), **options_webcam).start())
 except:
     errorOut.write(2, "Web Cam not Detected")
 
@@ -98,33 +98,33 @@ endTime = 0
 
 ##################################### CHANGE LED ######################################
 # This function calls led.py to change the color with given requirements
-def change_LED(r, g, b):    
+def change_LED(r, g, b):
     os.system('sudo python3 led.py -r' + str(r) + ' -g' + str(g) + ' -b' + str(b))
 ################################## END CHANGE LED #####################################
-    
+
 ###################################### RECORDING ######################################
 def beginRecording(button):
-    
+
     global fileNameList
     global writer1
     global writer2
     global video_streams
-    
+
     # start streams
     stream1 = video_streams[len(video_streams) - 2] # penultimate stream
     stream2 = video_streams[len(video_streams) - 1] # ultimate stream
-    stream1.start() 
-    stream2.start() 
-    
+    stream1.start()
+    stream2.start()
+
     fileNameList = compute.getNewFileNames()
     print(fileNameList)
-    writer1 = WriteGear(output_filename = fileNameList[0], **output_params1) 
+    writer1 = WriteGear(output_filename = fileNameList[0], **output_params1)
     writer2 = WriteGear(output_filename = fileNameList[1], **output_params2)
-    
+
     change_LED(255,0,0) # Red LED to indicate recording
-    
+
     while True:
-        
+
         frameA = stream1.read()
         # read frames from stream1
 
@@ -137,14 +137,14 @@ def beginRecording(button):
         if frameA is None or frameB is None:
             #if True break the infinite loop
             break
-        
+
         #cv2.imshow("Output Frame1", frameA)
         #cv2.imshow("Output Frame2", frameB)
         # Show output window of stream1 and stream 2 seperately
 
         writer1.write(frameA)
         writer2.write(frameB)
-        
+
         # If button is pressed, exit recording
         if button.is_pressed:
             time.sleep(0.5)
@@ -157,7 +157,7 @@ def beginRecording(button):
     #cv2.destroyAllWindows()
     # close output window
 ################################### END START RECORDING ####################################
-    
+
 ###################################### STOP RECORDING ######################################
 def stopRecording():
     # safely close both video streams
@@ -173,7 +173,7 @@ def stopRecording():
     writer1.close()
     writer2.close()
 ################################### END STOP RECORDING #################################
-    
+
 ###################################### PROCESSING ######################################
 def processingVideo():
 
@@ -183,7 +183,7 @@ def processingVideo():
     print(startTime)
     print(endTime)
     compute.mergeFiles(fileNameList[0],fileNameList[1], endTime - startTime, errorOut)
-    
+
     change_LED(0,255,0) # setup is done, turn on green LED
     return 0 # return state to initial state
 #################################### END PROCESSING #####################################
@@ -211,7 +211,7 @@ def shutDown(button, firstTime):
             break
     if not pressed:
         return pressed
-    
+
     # check for fourth button press
     pressed = False
     while time.time() - thirdTime < 2:
@@ -222,7 +222,7 @@ def shutDown(button, firstTime):
             break
     if not pressed:
         return pressed
-    
+
     # check for fourth button press
     pressed = False
     while time.time() - fourthTime < 2:
@@ -253,33 +253,33 @@ try:
                     change_LED(0,0,0)
                     os.system('sudo shutdown now')
                     break # test
-                
+
                 # Recording Stage
                 if state == 0:
                     state = state + 1 # go to the next state
                     print("Now Recording!")
                     startTime = time.time()
-                    
+
                     # initiate streams
                     # define and start the stream on first source ( For e.g #0 index Picamera)
                     try:
-                        video_streams.append(VideoGear(source=2, resolution=(1280,720), **options_picam).start()) 
+                        video_streams.append(VideoGear(source=2, resolution=(1280,720), **options_picam).start())
                     except:
                         errorOut.write(1, "PiCamera not Detected")
                     # define and start the stream on second source ( For e.g #1 index Picamera)
                     try:
-                        video_streams.append(VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()) 
+                        video_streams.append(VideoGear(source=0, resolution=(1920,1080), **options_webcam).start())
                     except:
                         errorOut.write(2, "Web Cam not Detected")
-                        
+
                     beginRecording(button)
                     stopRecording()
                     state = processingVideo() # state resets back to initial state
-                
+
                 # Processing Stage
                 else:
                     print("Now Processing!")
-#turn off LED when interrupted                    
+#turn off LED when interrupted
 except KeyboardInterrupt:
     print("interrupt in main")
     change_LED(0,0,0)

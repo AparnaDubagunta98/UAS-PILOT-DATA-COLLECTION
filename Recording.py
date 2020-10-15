@@ -8,6 +8,11 @@
 #    3.2 Verify
 #    3.3 change LED to Blue (now processing)
 
+import ErrorHandling
+import LEDControl
+import os
+import time
+
 #A2.1
 def getStartTime():
     print("getStartTime")
@@ -18,6 +23,7 @@ def startRecording():
 
 #A2.3
 def changeLEDtoRed():
+    LEDControl.turnRed()
     print("changeLEDtoRed")
 
 #A3.1
@@ -30,4 +36,5 @@ def verifyRecordings():
 
 #A3.3
 def changeLEDtoBlue():
+    LEDControl.turnBlue()
     print("changeLEDtoBlue")

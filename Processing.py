@@ -13,27 +13,27 @@ import ErrorHandling
 
 
 #path for USB drive
-usbPath = "~/media/VIDEOS"
+usbPath = "/home/pi/VIDEOS"
 
 #path for local storage -- SD card
-localPath = "~/Documents/localVids"
+localPath = "/home/pi/localVids"
 timeStamp = ""
 
 
 #Helper Function for A4.1
 def getVideoLength(videoFile):
-	result = subprocess.run(["ffprobe", "-v", "error", "-show_entries",
+	result = subprocess.run(["sudo ffprobe", "-v", "error", "-show_entries",
 	                     "format=duration", "-of",
 	                     "default=noprint_wrappers=1:nokey=1", videoFile],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 	return float(result.stdout)
 
 #A4.1
-def sychronizeVideos(FaceCamVideo, TabletCamVideo, duration):           
+def sychronizeVideos(FaceCamVideo, TabletCamVideo, duration):
     try:
     	# create merged file
     	fastMerged = timeStamp + "fastMerged.mp4"
     	# use filter complex and stack videos side by side
-        os.system("ffmpeg -i " + localPath + "/" + FaceCamVideo + " -i "+ localPath + "/" + TabletCamVideo + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + fastMerged)
+        os.system("sudo ffmpeg -i " + localPath + "/" + FaceCamVideo + " -i "+ localPath + "/" + TabletCamVideo + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + fastMerged)
     except:
     	ErrorHandling.errorBadFile()
 
@@ -45,8 +45,8 @@ def sychronizeVideos(FaceCamVideo, TabletCamVideo, duration):
         vidLength = getVideoLength(fastMerged)
         ### test with diff formula ###
         slowingFactor = duration/vidLength
-        os.system("ffmpeg -i " + localPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + mergedFileName)
-        os.system("rm "+ localPath + "/" + fastMerged)
+        os.system("sudo ffmpeg -i " + localPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + mergedFileName)
+        os.system("sudo rm "+ localPath + "/" + fastMerged)
         return mergedFileName
     except:
         ErrorHandling.errorBadSynch()
@@ -55,13 +55,13 @@ def sychronizeVideos(FaceCamVideo, TabletCamVideo, duration):
 # check if synched video is on SD card
 def verifySynchedVideos(mergedFileName):
     return (path.exists(localPath + "/" + mergedFileName))
-    
+
 #A4.3
 def exportVideos(FaceCamVideo,TabletCamVideo,mergedFileName):
 	dest_path = usbPath
 	# errorLog = error log path
 	filesToBeCopied = [FaceCamVideo,TabletCamVideo,mergedFileName]  #,errorLog]
-	try: 
+	try:
 		if(path.exists(dest_path) == False):
 			os.makedirs(dest_path)
 
@@ -76,6 +76,3 @@ def exportVideos(FaceCamVideo,TabletCamVideo,mergedFileName):
 ts = time.time()
 timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
 ## adjust main
-
-
-

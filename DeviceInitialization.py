@@ -81,7 +81,8 @@ def prepLocalStorage():
 #A1.7 - changes LED to green to indicate device is ready to record.
 def finishInitialization():
     #currently does not actually verify that all tests passed
-    LEDControl.turnGreen()
+    #calls LEDControl.turnGreen() function
+    os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
     print("Initialization Complete")
 
 #Calls initialiation functions in order

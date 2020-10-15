@@ -26,10 +26,11 @@ def turnBlue():
 
 #turn LED a custom color (r,g,b)
 def turnCustom(r, g, b):
-    if(r < 0 or r > 255)
+    if(r < 0 or r > 255):
         r = 0
-    if(g < 0 or g > 255)
+    if(g < 0 or g > 255):
         g = 0
-    if(b < 0 or b > 255)
+    if(b < 0 or b > 255):
         b = 0
     LED[0] = (r,g,b)
+

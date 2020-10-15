@@ -67,8 +67,8 @@ def exportVideos(FaceCamVideo,TabletCamVideo,mergedFileName):
 
 		for f in filesToBeCopied:
     		shutil.copy(f, dest_path)
-    except:
-    	ErrorHandling.errorUSBStorage()
+	except:
+		ErrorHandling.errorUSBStorage()
 
 
 

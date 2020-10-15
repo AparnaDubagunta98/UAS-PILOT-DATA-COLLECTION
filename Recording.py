@@ -13,6 +13,11 @@ import LEDControl
 import os
 import time
 
+#path for USB drive
+usbPath = "~/media/VIDEOS"
+#path for local storage
+localPath = "~/Documents/localVids"
+
 #A2.1
 def getStartTime():
     print("getStartTime")

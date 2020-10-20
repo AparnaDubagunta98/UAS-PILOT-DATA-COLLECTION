@@ -117,7 +117,12 @@ def changeLEDtoBlue():
     print("changeLEDtoBlue")
 
 def Recording(videoStreams,fileNameList, startTime, stopTime):
-    while(!button.when_released):
+    #wait for press
+    while( not button.is_pressed):
+        pass
+    time.sleep(.5)
+    #wait for release
+    while (button.is_pressed):
         pass
     # setup streams, turn LED to red, record frame by frame until button is pressed
     startRecording(videoStreams,fileNameList, startTime,stopTime)

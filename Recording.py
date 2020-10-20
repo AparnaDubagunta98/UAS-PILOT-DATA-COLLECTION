@@ -16,30 +16,34 @@ import time
 #path for USB drive
 usbPath = "~/media/VIDEOS"
 #path for local storage
-localPath = "~/Documents/localVids"
+localPath = "/home/pi/Documents/localVids"
 
-#A2.1
+#A2.1 -
 def getStartTime():
     print("getStartTime")
 
-#A2.2
+#A2.2 -
 def startRecording():
     print("startRecording")
 
-#A2.3
+#A2.3 -
 def changeLEDtoRed():
     LEDControl.turnRed()
     print("changeLEDtoRed")
 
-#A3.1
-def stopRecording():
+#A3.1 - Stop the recording streams. Assumes videoStreams is a list of
+def stopRecording(videoStreams):
+    #maybe error handling
+    for stream in videoStreams:
+        stream.stop()
     print("stopRecording")
 
-#A3.2
-def verifyRecordings():
+#A3.2 - Checks that the recorded files exist in
+def verifyRecordings(fileNameList):
+
     print("verifyRecordings")
 
-#A3.3
+#A3.3 - Changes LED to blue to signal recording has ended and processing will begin
 def changeLEDtoBlue():
     LEDControl.turnBlue()
     print("changeLEDtoBlue")

@@ -22,10 +22,17 @@ localPath = "/home/pi/Documents/localVids"
 def getStartTime():
     return time.time()
 
-#A2.2 -
-def startRecording():
-    print("startRecording")
+#A2.2 - starts two video streams and stores them in videoStreams. The start time is stored in startTime.
+def startRecording(videoStreams, startTime):
+    options_webcam = {"exposure_compensation": 0, "awb_mode": "sun", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080, "CAP_PROP_AUTOFOCUS": 'True'} # define tweak parameters
+    options_picam = {"exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}
+    faceStream = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
+    print("FaceCam Stream Started")
+    tabletStream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
+    print("TabletCam Stream Started")
     startTime = getStartTime()
+    videoStreams.append(faceStream)
+    videoStreams.append(tabletStream)
 
 #A2.3 -
 def changeLEDtoRed():

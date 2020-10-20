@@ -13,7 +13,7 @@ import ErrorHandling
 
 
 #path for USB drive
-usbPath = "/home/pi/VIDEOS"
+usbPath = "/media/pi/VIDEOS"
 
 #path for local storage -- SD card
 localPath = "/home/pi/localVids"
@@ -28,44 +28,44 @@ def getVideoLength(videoFile):
 	return float(result.stdout)
 
 #A4.1
-def sychronizeVideos(FaceCamVideo, TabletCamVideo, duration):
+def sychronizeVideos(fileNameList, duration,):
     try:
     	# create merged file
     	fastMerged = timeStamp + "fastMerged.mp4"
     	# use filter complex and stack videos side by side
-        os.system("sudo ffmpeg -i " + localPath + "/" + FaceCamVideo + " -i "+ localPath + "/" + TabletCamVideo + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + fastMerged)
+        os.system("sudo ffmpeg -i " + localPath + "/" + fileNameList[0] + " -i "+ localPath + "/" + fileNameList[1] + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + fastMerged)
     except:
     	ErrorHandling.errorBadFile()
 
     # if merging & synching happens properly, continue to slow and adjust video
     try:
     	#final merged file to be exported and used
-    	mergedFileName = timeStamp + "merged.mp4"
+    	mergedVideo = timeStamp + "merged.mp4"
+		fileNameList.append(mergedVideo)
+
         # slow video down
         vidLength = getVideoLength(fastMerged)
         ### test with diff formula ###
         slowingFactor = duration/vidLength
-        os.system("sudo ffmpeg -i " + localPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + mergedFileName)
+        os.system("sudo ffmpeg -i " + localPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + fileNameList[2])
         os.system("sudo rm "+ localPath + "/" + fastMerged)
-        return mergedFileName
     except:
         ErrorHandling.errorBadSynch()
 
 #A4.2
 # check if synched video is on SD card
-def verifySynchedVideos(mergedFileName):
-    return (path.exists(localPath + "/" + mergedFileName))
+def verifySynchedVideos(fileNameList):
+    return (path.exists(localPath + "/" + fileNameList[2]))
 
 #A4.3
-def exportVideos(FaceCamVideo,TabletCamVideo,mergedFileName):
+def exportVideos(fileNameList):
 	dest_path = usbPath
-	# errorLog = error log path
-	filesToBeCopied = [FaceCamVideo,TabletCamVideo,mergedFileName]  #,errorLog]
+	# errorLog = error log path  #,errorLog]
 	try:
 		if(path.exists(dest_path) == False):
 			os.makedirs(dest_path)
 
-		for f in filesToBeCopied:
+		for f in filesNameList:
     		shutil.copy(f, dest_path)
 	except:
 		ErrorHandling.errorUSBStorage()
@@ -75,6 +75,6 @@ def exportVideos(FaceCamVideo,TabletCamVideo,mergedFileName):
 ## Main ##
 ts = time.time()
 timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
-mergedFileName = sychronizeVideos(FaceCamVideo,TabletCamVideo,duration)
-verifySynchedVideos(mergedFileName)
-exportVideos(FaceCamVideo,TabletCamVideo,mergedFileName)
+sychronizeVideos(fileNameList,duration)
+verifySynchedVideos(fileNameList)
+exportVideos(fileNameList)

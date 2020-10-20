@@ -87,9 +87,10 @@ def finishInitialization():
 
 #Calls initialiation functions in order
 
-#detectFaceCam()
-#detectTabletCam()
-#detectExternalUSB()
-#verifyStorageCapacity()
-#prepLocalStorage()
-finishInitialization()
+def DeviceInitialization():
+    #detectFaceCam()
+    #detectTabletCam()
+    #detectExternalUSB()
+    #verifyStorageCapacity()
+    #prepLocalStorage()
+    finishInitialization()

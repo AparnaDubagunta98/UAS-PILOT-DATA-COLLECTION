@@ -7,7 +7,10 @@
 #    3.1 Press button to stop ; Save files ; Get Stop time
 #    3.2 Verify
 #    3.3 change LED to Blue (now processing)
-
+from vidgear.gears import VideoGear
+from vidgear.gears import WriteGear
+from vidgear.gears import PiGear
+import cv2
 import ErrorHandling
 import LEDControl
 import os
@@ -26,20 +29,24 @@ def getStartTime():
 def startRecording(videoStreams, startTime):
     options_webcam = {"exposure_compensation": 0, "awb_mode": "sun", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080, "CAP_PROP_AUTOFOCUS": 'True'} # define tweak parameters
     options_picam = {"exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}
-    faceStream = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
-    print("FaceCam Stream Started")
-    tabletStream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
-    print("TabletCam Stream Started")
-    startTime = getStartTime()
-    videoStreams.append(faceStream)
-    videoStreams.append(tabletStream)
+    try:
+        faceStream = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
+        print("FaceCam Stream Started")
+        tabletStream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
+        print("TabletCam Stream Started")
+        startTime = getStartTime()
+        videoStreams.append(faceStream)
+        videoStreams.append(tabletStream)
+    except:
+        ErroHandling.errorRecording()
 
-#A2.3 -
+
+#A2.3 - Change LED to Red to singal recording has begun.
 def changeLEDtoRed():
     LEDControl.turnRed()
     print("changeLEDtoRed")
 
-#A3.1 - Stop the recording streams. Assumes videoStreams is a list of
+#A3.1 - Stop the recording streams. Assumes videoStreams is a list of the streams (face camera followed by tablet camera).
 def stopRecording(videoStreams):
     #maybe error handling
     for stream in videoStreams:

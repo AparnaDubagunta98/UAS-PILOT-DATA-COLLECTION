@@ -1,4 +1,4 @@
-#A5 ErrorHandling.py 
+#A5 ErrorHandling.py
 #Function Definitions:
 #  Error5.1-5.6:
 #    Error log update
@@ -21,7 +21,7 @@ def errorFaceCam():
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
-        
+
         #dot 2
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
         sleep(.5)
@@ -33,7 +33,7 @@ def errorFaceCam():
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
-    
+
     os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
 
 
@@ -48,7 +48,7 @@ def errorTabletCam():
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
-        
+
         #dot 2
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
         sleep(.5)
@@ -61,7 +61,7 @@ def errorTabletCam():
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
-    
+
 
 #A5.3
 def errorUSBDetect():
@@ -75,7 +75,7 @@ def errorUSBDetect():
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
-        
+
         #dot 2
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
         sleep(1.5)
@@ -98,7 +98,7 @@ def errorUSBStorage():
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
-        
+
         #dot 2
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
         sleep(1.5)
@@ -121,7 +121,7 @@ def errorBadFile():
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
-        
+
         #dot 2
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
         sleep(.5)
@@ -144,7 +144,7 @@ def errorBadSynch():
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
-        
+
         #dot 2
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
         sleep(.5)
@@ -156,6 +156,30 @@ def errorBadSynch():
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
+
+#Error signaling some problem in Recording process
+def errorRecording():
+    print("errorRecording")
+    updateErrorLog("Bad Vid Sync")
+    for i in range(10):
+
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        sleep(1.5)
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
+        sleep(.5)
+
+        #dot 2
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        sleep(.5)
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
+        sleep(.5)
+
+        #dot 3
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        sleep(1.5)
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
+        sleep(.5)
+
 
 #A5.7
 def updateErrorLog(errorName):
@@ -171,4 +195,3 @@ def updateErrorLog(errorName):
 
     usbLog.close()
     sdLog.close()
-

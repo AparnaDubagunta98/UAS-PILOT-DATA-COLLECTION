@@ -28,7 +28,7 @@ def getVideoLength(videoFile):
 	return float(result.stdout)
 
 #A4.1
-def sychronizeVideos(fileNameList, duration,):
+def sychronizeVideos(fileNameList, duration):
     try:
     	# create merged file
     	fastMerged = timeStamp + "fastMerged.mp4"

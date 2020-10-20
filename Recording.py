@@ -20,11 +20,12 @@ localPath = "/home/pi/Documents/localVids"
 
 #A2.1 -
 def getStartTime():
-    print("getStartTime")
+    return time.time()
 
 #A2.2 -
 def startRecording():
     print("startRecording")
+    startTime = getStartTime()
 
 #A2.3 -
 def changeLEDtoRed():
@@ -40,8 +41,7 @@ def stopRecording(videoStreams):
 
 #A3.2 - Checks that the recorded files exist in
 def verifyRecordings(fileNameList):
-
-    print("verifyRecordings")
+    return (path.exists(localPath + "/" + FaceCamVideo) and path.exists(localPath + "/" + TabletCamVideo))
 
 #A3.3 - Changes LED to blue to signal recording has ended and processing will begin
 def changeLEDtoBlue():

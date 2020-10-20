@@ -6,11 +6,6 @@ import ErrorHandling
 import LEDControl
 
 
-def button_setup():
-    print("button")
-
-
-
 #
 fileNameList = []
 videoStreams = []
@@ -19,6 +14,5 @@ startTime = 0
 stopTime = 0
 
 ## Main
-button_setup()
 
 DeviceInitialization()

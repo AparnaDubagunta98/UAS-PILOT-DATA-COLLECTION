@@ -75,4 +75,6 @@ def exportVideos(FaceCamVideo,TabletCamVideo,mergedFileName):
 ## Main ##
 ts = time.time()
 timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
-## adjust main
+mergedFileName = sychronizeVideos(FaceCamVideo,TabletCamVideo,duration)
+verifySynchedVideos(mergedFileName)
+exportVideos(FaceCamVideo,TabletCamVideo,mergedFileName)

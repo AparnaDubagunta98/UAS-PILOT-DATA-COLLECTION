@@ -64,6 +64,8 @@ def exportVideos(fileNameList):
 	try:
 		if(path.exists(dest_path) == False):
 			os.makedirs(dest_path)
+			# os.system("sudo mkdir " + dest_path)
+
 
 		for f in filesNameList:
     		shutil.copy(f, dest_path)

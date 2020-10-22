@@ -34,7 +34,8 @@ def sychronizeVideos(fileNameList, duration):
     	fastMerged = timeStamp + "fastMerged.mp4"
     	# use filter complex and stack videos side by side
         os.system("sudo ffmpeg -i " + localPath + "/" + fileNameList[0] + " -i "+ localPath + "/" + fileNameList[1] + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + fastMerged)
-    except:
+		print("Phase 1 Done")
+	except:
     	ErrorHandling.errorBadFile()
 
     # if merging & synching happens properly, continue to slow and adjust video
@@ -49,13 +50,19 @@ def sychronizeVideos(fileNameList, duration):
         slowingFactor = duration/vidLength
         os.system("sudo ffmpeg -i " + localPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + fileNameList[2])
         os.system("sudo rm "+ localPath + "/" + fastMerged)
+		return True
     except:
-        ErrorHandling.errorBadSynch()
+		return False
+        #ErrorHandling.errorBadSynch()
 
 #A4.2
 # check if synched video is on SD card
 def verifySynchedVideos(fileNameList):
-    return (path.exists(localPath + "/" + fileNameList[2]))
+    if(path.exists(localPath + "/" + fileNameList[2]) == False):
+		return False
+		#ErrorHandling.errorBadSynch()
+	else:
+		return True
 
 #A4.3
 def exportVideos(fileNameList):
@@ -67,8 +74,10 @@ def exportVideos(fileNameList):
 
 		for f in filesNameList:
     		shutil.copy(f, dest_path)
+		return True
 	except:
-		ErrorHandling.errorUSBStorage()
+		return False
+		#ErrorHandling.errorUSBStorage()
 
 
 

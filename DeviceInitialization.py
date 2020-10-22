@@ -27,7 +27,9 @@ def detectFaceCam():
         video_stream = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
         print("FaceCam Detected")
         video_stream.stop()
+        return True
     except:
+        return False
         ErrorHandling.errorFaceCam()
 
 #A1.3 - detects if the tablet camera (pi Camera) is accessible for recording
@@ -39,7 +41,9 @@ def detectTabletCam():
         video_stream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
         print("TabletCam Detected")
         video_stream.stop()
+        return True
     except:
+        return False
         ErrorHandling.errorTabletCam()
 
 
@@ -49,7 +53,9 @@ def detectExternalUSB():
     try :
         disk = os.statvfs(usbPath)
         print("External Storage USB Detected")
+        return True
     except:
+        return False
         ErrorHandling.errorUSBDetect()
 
 #A1.5 - detects if the external storage device has enough available video storage
@@ -61,36 +67,47 @@ def verifyStorageCapacity():
         print("Storage Available: %.3f MB" % (availableSpaceMB))
         if(availableSpaceMB > 30000):
             print("External Storage Space Adequate")
+            return True
         else:
+            return True
             ErrorHandling.errorUSBStorage()
     except:
+        return False
         ErrorHandling.errorUSBStorage()
 
 #A1.6 - prepares device storage for recording - deletes previous recordings and prepares folder
 def prepLocalStorage():
-    if(os.path.exists(localPath)):
-        for file in os.listdir(localPath):
-            print(file)
-            if(file.endswith(".txt")):
-                print("removed")
-                os.system("sudo rm "+localPath+"/"+file)
-    else:
-        os.system("sudo mkdir " + localPath)
-    print("Local Storage " + localPath + " prepared")
+
+    try:
+        if(os.path.exists(localPath)):
+            for file in os.listdir(localPath):
+                print(file)
+                if(file.endswith(".mp4")):
+                    print("removed")
+                    os.system("sudo rm "+localPath+"/"+file)
+        else:
+            os.system("sudo mkdir " + localPath)
+        print("Local Storage " + localPath + " prepared")
+        return True
+    except:
+        return False
 
 #A1.7 - changes LED to green to indicate device is ready to record.
 def finishInitialization():
     #currently does not actually verify that all tests passed
     #calls LEDControl.turnGreen() function
-    os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
-    print("Initialization Complete")
+    try:
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        print("Initialization Complete")
+        return True
+    except:
+        return False
 
 #Calls initialiation functions in order
-
 def DeviceInitialization():
-    #detectFaceCam()
-    #detectTabletCam()
-    #detectExternalUSB()
-    #verifyStorageCapacity()
-    #prepLocalStorage()
+    detectFaceCam()
+    detectTabletCam()
+    detectExternalUSB()
+    verifyStorageCapacity()
+    prepLocalStorage()
     finishInitialization()

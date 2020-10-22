@@ -38,12 +38,12 @@ def getNewFileNames():
     TabletCamVideo = ts + "_TabletCamVideo.mp4" #picam
     return [FaceCamVideo,TabletCamVideo]
 
-#A2.2 - starts two video streams and stores them in videoStreams. The start time is stored in startTime.
 #A2.3 - Change LED to Red to singal recording has begun.
 def changeLEDtoRed():
     LEDControl.turnRed()
     print("changeLEDtoRed")
 
+#A2.2 - starts two video streams and stores them in videoStreams. The start time is stored in startTime.
 def startRecording(videoStreams,fileNameList, startTime,stopTime):
     options_webcam = {"exposure_compensation": 0, "awb_mode": "sun", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080, "CAP_PROP_AUTOFOCUS": 'True'} # define tweak parameters
     options_picam = {"exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}

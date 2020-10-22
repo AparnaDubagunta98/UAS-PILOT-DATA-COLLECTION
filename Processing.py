@@ -82,8 +82,9 @@ def exportVideos(fileNameList):
 
 
 ## Main ##
-ts = time.time()
-timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
-sychronizeVideos(fileNameList,duration)
-verifySynchedVideos(fileNameList)
-exportVideos(fileNameList)
+def Processing(fileNameList,duration):
+	ts = time.time()
+	timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
+	sychronizeVideos(fileNameList,duration)
+	verifySynchedVideos(fileNameList)
+	exportVideos(fileNameList)

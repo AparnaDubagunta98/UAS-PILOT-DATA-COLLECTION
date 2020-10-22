@@ -60,12 +60,10 @@ def verifySynchedVideos(fileNameList):
 #A4.3
 def exportVideos(fileNameList):
 	dest_path = usbPath
-	# errorLog = error log path  #,errorLog]
 	try:
 		if(path.exists(dest_path) == False):
 			os.makedirs(dest_path)
 			# os.system("sudo mkdir " + dest_path)
-
 
 		for f in filesNameList:
     		shutil.copy(f, dest_path)

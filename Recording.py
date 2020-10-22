@@ -92,7 +92,6 @@ def startRecording(videoStreams, fileNameList, startTime, stopTime):
 
             return True
 
-
     except:
         return False
         #ErrorHandling.errorRecording()
@@ -124,7 +123,7 @@ def changeLEDtoBlue():
     LEDControl.turnBlue()
     print("changeLEDtoBlue")
 
-def Recording(videoStreams,fileNameList, startTime, stopTime):
+def Recording(fileNameList, startTime, stopTime):
     #wait for press
     while( not button.is_pressed):
         pass

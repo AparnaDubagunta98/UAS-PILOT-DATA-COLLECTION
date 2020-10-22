@@ -14,7 +14,7 @@ LED = neopixel.NeoPixel(board.D18, 1)
 
 #turn LED Red
 def turnRed():
-    led[0] = red
+    LED[0] = red
 
 #turn LED Green
 def turnGreen():

@@ -15,6 +15,7 @@ import ErrorHandling
 import LEDControl
 import os
 import time
+import datetime
 from gpiozero import Button
 
 
@@ -34,76 +35,86 @@ def getTime():
 def getNewFileNames():
     ts = time.time()
     timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
-    FaceCamVideo = ts + "_FaceCamVideo.mp4"
-    TabletCamVideo = ts + "_TabletCamVideo.mp4" #picam
+    FaceCamVideo = timeStamp + "_FaceCamVideo.mp4"
+    TabletCamVideo = timeStamp + "_TabletCamVideo.mp4" #picam
     return [FaceCamVideo,TabletCamVideo]
 
 #A2.3 - Change LED to Red to singal recording has begun.
 def changeLEDtoRed():
-    LEDControl.turnRed()
+    os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnRed()'")
     print("changeLEDtoRed")
 
 #A2.2 - starts two video streams and stores them in videoStreams. The start time is stored in startTime.
-def startRecording(videoStreams, fileNameList, startTime, stopTime):
+def startRecording():
+    global fileNameList
+    global videoStreams
+    global startTime
+    global stopTime
+    global writer_faceCam
+    global writer_tabletCam
     options_webcam = {"exposure_compensation": 0, "awb_mode": "sun", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080, "CAP_PROP_AUTOFOCUS": 'True'} # define tweak parameters
     options_picam = {"exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}
-    try:
-        faceStream = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
-        print("FaceCam Stream Started")
-        tabletStream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
-        print("TabletCam Stream Started")
+    
+    faceStream = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
+    print("FaceCam Stream Started")
+    tabletStream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
+    print("TabletCam Stream Started")
 
-        fileNameList = getNewFileNames()
-        output_params_faceCam = {"-vcodec":"libx264", "-preset":"slow", "-bitrate":2000000, "-input_framerate":faceStream.framerate}
-        output_params_tabletCam = {"-input_framerate":tabletStream.framerate}
-        writer_faceCam = WriteGear(output_filename = fileNameList[0], **output_params_faceCam)
-        writer_tabletCam = WriteGear(output_filename = fileNameList[1], **output_params_tabletCam)
+    fileNameList = getNewFileNames()
+    print("FNL: " + fileNameList[0] + " " + fileNameList[1])
+    output_params_faceCam = {"-vcodec":"libx264", "-preset":"slow", "-bitrate":2000000, "-input_framerate":faceStream.framerate}
+    output_params_tabletCam = {"-input_framerate":tabletStream.framerate}
+    writer_faceCam = WriteGear(output_filename = fileNameList[0], **output_params_faceCam)
+    writer_tabletCam = WriteGear(output_filename = fileNameList[1], **output_params_tabletCam)
 
-        startTime = getTime()
-        videoStreams.append(faceStream)
-        videoStreams.append(tabletStream)
+    startTime = getTime()
+    videoStreams.append(faceStream)
+    videoStreams.append(tabletStream)
 
-        changeLEDtoRed()
+    changeLEDtoRed()
 
-        # record frame by frame
-        while(True):
-            frame_faceCam = stream_faceCam.read()
-            frame_tabletCam = stream_tabletCam.read()
-            # read frames from stream2
-            # print("stream_faceCam.framerate:" + str(stream_faceCam.framerate))
-            # print("stream_tabletCam.framerate:" + str(stream_tabletCam.framerate))
+    # record frame by frame
+    while(True):
+        frame_faceCam = faceStream.read()
+        frame_tabletCam = tabletStream.read()
+        # read frames from stream2
+        # print("stream_faceCam.framerate:" + str(stream_faceCam.framerate))
+        # print("stream_tabletCam.framerate:" + str(stream_tabletCam.framerate))
 
-            # check if any of two frame is None
-            if frame_faceCam is None or frame_tabletCam is None:
-                stopTime = getTime()
-                break
+        # check if any of two frame is None
+        if frame_faceCam is None or frame_tabletCam is None:
+            stopTime = getTime()
+            break
 
-            #legacy code for testing
-            #cv2.imshow("Output Frame1", frameA)
-            #cv2.imshow("Output Frame2", frameB)
-            # Show output window of stream1 and stream 2 seperately
+        #legacy code for testing
+        #cv2.imshow("Output Frame1", frameA)
+        #cv2.imshow("Output Frame2", frameB)
+        # Show output window of stream1 and stream 2 seperately
 
-            writer_faceCam.write(frame_faceCam)
-            writer_tabletCam.write(frame_tabletCam)
+        writer_faceCam.write(frame_faceCam)
+        writer_tabletCam.write(frame_tabletCam)
 
-            if(button.is_pressed):
-                stopTime = getTime()
-                break
+        if(button.is_pressed):
+            stopTime = getTime()
+            break
 
-            return True
 
-    except:
-        return False
         #ErrorHandling.errorRecording()
 
 
 
 #A3.1 - Stop the recording streams. Assumes videoStreams is a list of the streams (face camera followed by tablet camera).
-def stopRecording(videoStreams):
+def stopRecording():
+    global writer_faceCam
+    global writer_tabletCam
+    global videoStreams
+
     #maybe error handling
     try:
         for stream in videoStreams:
             stream.stop()
+        writer_faceCam.close()
+        writer_tabletCam.close()
         print("stopRecording")
         return True
     except:
@@ -111,8 +122,8 @@ def stopRecording(videoStreams):
         #ErrorHandling.errorRecording()
 
 #A3.2 - Checks that the recorded files exist in
-def verifyRecordings(fileNameList):
-    if((path.exists(localPath + "/" + fileNameList[0]) and path.exists(localPath + "/" + fileNameList[1])) == False):
+def verifyRecordings():
+    if((os.path.exists(localPath + "/" + fileNameList[0]) and os.path.exists(localPath + "/" + fileNameList[1])) == False):
         return False
         #ErrorHandling.errorBadFile()
     else:
@@ -120,10 +131,10 @@ def verifyRecordings(fileNameList):
 
 #A3.3 - Changes LED to blue to signal recording has ended and processing will begin
 def changeLEDtoBlue():
-    LEDControl.turnBlue()
+    os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnBlue()'")
     print("changeLEDtoBlue")
 
-def Recording(fileNameList, startTime, stopTime):
+def Recording(videoStreams,fileNameList, startTime, stopTime):
     #wait for press
     while( not button.is_pressed):
         pass
@@ -137,3 +148,26 @@ def Recording(fileNameList, startTime, stopTime):
     stopRecording(videoStreams)
     verifyRecordings(fileNameList)
     changeLEDtoBlue()
+
+
+##TESTTING CODE
+print("Testing startRecording")
+videoStreams = []
+fileNameList = []
+startTime = 0
+stopTime = 0
+writer_faceCam = ""
+writer_tabletCam = ""
+startRecording()
+
+print("startRecording finished")
+print("Testing stopRecording")
+stopRecording()
+print("stopRecording finished")
+print("Testing verifyRecordings")
+
+verifyRecordings()
+print("verifyRecordings finished")
+changeLEDtoBlue()
+print("FileNameList: " + fileNameList[0] + " " + fileNameList[1])
+    

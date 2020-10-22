@@ -90,9 +90,12 @@ def startRecording(videoStreams,fileNameList, startTime,stopTime):
                 stopTime = getTime()
                 break
 
+            return True
+
 
     except:
-        ErrorHandling.errorRecording()
+        return False
+        #ErrorHandling.errorRecording()
 
 
 
@@ -103,13 +106,18 @@ def stopRecording(videoStreams):
         for stream in videoStreams:
             stream.stop()
         print("stopRecording")
+        return True
     except:
-        ErrorHandling.errorRecording()
+        return False
+        #ErrorHandling.errorRecording()
 
 #A3.2 - Checks that the recorded files exist in
 def verifyRecordings(fileNameList):
     if((path.exists(localPath + "/" + fileNameList[0]) and path.exists(localPath + "/" + fileNameList[1])) == False):
-        ErrorHandling.errorBadFile()
+        return False
+        #ErrorHandling.errorBadFile()
+    else:
+        return True
 
 #A3.3 - Changes LED to blue to signal recording has ended and processing will begin
 def changeLEDtoBlue():

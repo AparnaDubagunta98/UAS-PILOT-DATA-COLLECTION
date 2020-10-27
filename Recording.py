@@ -54,10 +54,10 @@ def startRecording():
     global writer_tabletCam
     options_webcam = {"exposure_compensation": 0, "awb_mode": "sun", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080, "CAP_PROP_AUTOFOCUS": 'True'} # define tweak parameters
     options_picam = {"exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}
-    
-    faceStream = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
+
+    faceStream = VideoGear(source=0, resolution=(1920,1080), framerate=30, **options_webcam).start()
     print("FaceCam Stream Started")
-    tabletStream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
+    tabletStream = VideoGear(source=2, resolution=(1920,1080), framerate=30, **options_picam).start()
     print("TabletCam Stream Started")
 
     fileNameList = getNewFileNames()
@@ -65,7 +65,7 @@ def startRecording():
     output_params_faceCam = {"-vcodec":"libx264", "-preset":"slow", "-bitrate":2000000, "-input_framerate":faceStream.framerate}
     output_params_tabletCam = {"-input_framerate":tabletStream.framerate}
     writer_faceCam = WriteGear(output_filename = fileNameList[0], **output_params_faceCam)
-    writer_tabletCam = WriteGear(output_filename = fileNameList[1], **output_params_tabletCam)
+    writer_tabletCam = WriteGear(output_filename =  fileNameList[1], **output_params_tabletCam)
 
     startTime = getTime()
     videoStreams.append(faceStream)
@@ -170,4 +170,3 @@ verifyRecordings()
 print("verifyRecordings finished")
 changeLEDtoBlue()
 print("FileNameList: " + fileNameList[0] + " " + fileNameList[1])
-    

@@ -25,8 +25,8 @@ def detectFaceCam():
 
     try:
         video_stream = VideoGear(source=0, resolution=(1920,1080), **options_webcam).start()
-        print("FaceCam Detected")
         video_stream.stop()
+        print("FaceCam Detected")
         return True
     except:
         return False
@@ -38,9 +38,13 @@ def detectTabletCam():
     options_picam = {"exposure_compensation": 15, "awb_mode": "horizon", "sensor_mode": 0, "CAP_PROP_FRAME_WIDTH ":1920, "CAP_PROP_FRAME_HEIGHT":1080}
 
     try:
-        video_stream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
+        try:
+            video_stream = VideoGear(source=2, resolution=(1920,1080), **options_picam).start()
+            video_stream.stop()
+        except:
+            video_stream = VideoGear(source=1, resolution=(1920,1080), **options_picam).start()
+            video_stream.stop()
         print("TabletCam Detected")
-        video_stream.stop()
         return True
     except:
         return False
@@ -65,7 +69,7 @@ def verifyStorageCapacity():
         disk = os.statvfs(usbPath)
         availableSpaceMB = (disk.f_bfree * disk.f_bsize /1024/ 1024)
         print("Storage Available: %.3f MB" % (availableSpaceMB))
-        if(availableSpaceMB > 30000):
+        if(availableSpaceMB > 330):
             print("External Storage Space Adequate")
             return True
         else:

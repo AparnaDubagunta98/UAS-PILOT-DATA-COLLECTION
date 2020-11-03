@@ -1,21 +1,37 @@
-# Main Function
-import DeviceInitialization
-import Recording
-import Processing
-import ErrorHandling
-import LEDControl
+import DeviceInitialization as di
+import Recording as rc
+import Processing as pro
+import ErrorHandling as eh
+import LEDControl as lc
 
-## Main - Runs functions in order (Startup, Record, Process)
-#Any encountered errors are handled internally
-#Will remove old Data on startup. Allows multiple recordings during session
-DeviceInitialization.DeviceInitialization()
-while(True){
-    #Initialize Variables for this Recording
-    fileNameList = []
-    startTime = 0
-    stopTime = 0
-    #Record Videos
-    Recording.Recording(fileNameList, startTime, stopTime)
-    #Merge and export Videos
-    Processing.Processing(fileNameList, stopTime - startTime)
-}
+
+#global definitions
+usbPath = "/media/pi/VIDEOS"
+localPath = "/home/pi/Documents/localVids"
+
+
+
+# Main
+fileNameList = []
+duration = 0
+startTime = 0
+stopTime = 0
+
+# Device Initialization
+di.DeviceInitialization()
+print("Done DI")
+
+while(True):
+    # Recording
+    duration, fileNameList = rc.Recording()
+    print("Done Recording")
+    print("in driver Duration : ",duration)
+    print("in driver FNL : ",fileNameList)
+
+    # Processing
+    pro.Processing(fileNameList,duration)
+    print("Done Procesing")
+   
+    # Finish 
+    di.finishInitialization()
+

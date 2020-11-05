@@ -204,9 +204,9 @@ def updateErrorLog(errorName):
     sdLog.write(errorName + " " + str(timeStamp)+"\n")
     sdLog.close()
     if(os.path.exists("/media/pi/VIDEOS")):
-       print("usb path detected")
+       print("Exporting to USB")
        shutil.copy("/home/pi/Documents/localVids/errorLog.txt", "/media/pi/VIDEOS/")
-    print(errorName)
+    #print(errorName)
     return True
     #usbLog.close()
     #sdLog.close()

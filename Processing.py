@@ -104,9 +104,10 @@ def exportVideos():
 
 ## Main ##
 def Processing(fnl,duration):
+
+    print("Starting Processing")
     #change LED to blue to indicate Processing started
     changeLEDtoBlue();
-    print("Starting Processing")
     print("Duration of Recording = ",duration)
     global timeStamp
     global fileNameList

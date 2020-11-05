@@ -35,9 +35,9 @@ def synchronizeVideos(duration):
         fastMerged = timeStamp + "fastMerged.mp4"
     	# use filter complex and stack videos side by side
         os.system("sudo ffmpeg -loglevel panic -i " + localPath + "/" + fileNameList[0] + " -i "+ localPath + "/" + fileNameList[1] + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + presentPath + "/" + fastMerged)
-        print("Phase 1 Done")
+        print("Processing Phase 1 Done")
     except:
-        ErrorHandling.errorBadFile()
+        os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorBadFile()'")
 
     # if merging & synching happens properly, continue to slow and adjust video
     #try:
@@ -54,9 +54,13 @@ def synchronizeVideos(duration):
     #except:
        # return False
     slowingFactor = duration/vidLength
-    os.system("sudo ffmpeg -loglevel panic -i " + presentPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + mergedVideo)
+    try:
+        os.system("sudo ffmpeg -loglevel panic -i " + presentPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + mergedVideo)
+    except:
+        os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorBadSynch()'")
     #print("merged ? " ,os.path.exists(localPath + "/" + mergedVideo))
     #print("fast merged ? ", os.path.exists(localPath + "/" +fastMerged))
+    print("Synchronization of videos Complete \n")
     os.system("rm -f "+ presentPath + "/" + fastMerged)
     #os.system("sudo mv " + presentPath + "/" + mergedVideo + " " + localPath)
     #ErrorHandling.errorBadSynch()
@@ -67,7 +71,7 @@ def verifySynchedVideos():
     global fileNameList
     if(os.path.exists(localPath + "/" + fileNameList[len(fileNameList)-1]) == False):
         return False
-	#ErrorHandling.errorBadSynch()
+	#os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorBadSynch()'")
     else:
         return True
 
@@ -77,7 +81,7 @@ def exportVideos():
     global timeStamp
     destPath = usbPath + "/" + timeStamp
     #src_path = localPath
-    print("in Export :",fileNameList)
+    print("Exporting Files "+ ','.join(fileNameList))
     try:
         if(os.path.exists(destPath) == False):
             #os.makedirs(dest_path)
@@ -89,27 +93,33 @@ def exportVideos():
         return True
     except:
         return False
-	#ErrorHandling.errorUSBStorage()
+	#os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorUSBStorage()'")
 
 
 
 ## Main ##
 def Processing(fnl,duration):
         print("Starting Processing")
-        print("Duration = ",duration)
+        print("Duration of Recording = ",duration)
         global timeStamp
         global fileNameList
         fileNameList = fnl
-        print("fnl : ",fileNameList)
+        print("Files : "+','.join(fileNameList))
         ts = time.time()
         timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
         synchronizeVideos(duration)
         vr = verifySynchedVideos()
-        print(vr)
         exportVideos()
+        return vr
 
 fileNameList = []
 timeStamp = ""
+# Note : make time Stamp uniform 
+
+
+
+
+
 #ts = time.time()
 #timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
 #fileNameList = ["2020-10-29-13-26-18_FaceCamVideo.mp4", "2020-10-29-13-26-18_TabletCamVideo.mp4"]

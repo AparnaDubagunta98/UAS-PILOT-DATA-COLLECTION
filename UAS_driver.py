@@ -18,20 +18,26 @@ startTime = 0
 stopTime = 0
 
 # Device Initialization
-di.DeviceInitialization()
-print("Done DI")
+x = di.DeviceInitialization()
+while(x == -1):
+    x = di.DeviceInitialization()
+
+
+print("SETUP COMPLETE \n")
 
 while(True):
     # Recording
     duration, fileNameList = rc.Recording()
-    print("Done Recording")
-    print("in driver Duration : ",duration)
-    print("in driver FNL : ",fileNameList)
+    #print("Done Recording")
+    #print("in driver Duration : ",duration)
+    #print("in driver FNL : ",fileNameList)
 
     # Processing
-    pro.Processing(fileNameList,duration)
+    vr = pro.Processing(fileNameList,duration)
+    #print("verify processing return :",vr)
     print("Done Procesing")
    
     # Finish 
     di.finishInitialization()
+
 

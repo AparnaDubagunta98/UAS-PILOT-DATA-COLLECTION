@@ -19,19 +19,19 @@ def errorFaceCam():
 
     for i in range(10):
         #dot 1
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 2
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 3
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
@@ -42,23 +42,23 @@ def errorFaceCam():
 #A5.2
 def errorTabletCam():
     print("errorTabletCam")
-    #updateErrorLog("Tablet Cam not detected")
+    updateErrorLog("Tablet Cam not detected")
 
     for i in range(10):
         #dot 1
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.1)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 2
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.1)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 3
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(1)
@@ -68,24 +68,24 @@ def errorTabletCam():
 #A5.3
 def errorUSBDetect():
     print("errorUSBDetect")
-    #updateErrorLog("No USB Detected")
+    updateErrorLog("No USB Detected")
 
     for i in range(10):
 
         #dot 1
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 2
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 3
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
@@ -93,22 +93,22 @@ def errorUSBDetect():
 #A5.4
 def errorUSBStorage():
     print("errorUSBStorage")
-    #updateErrorLog("No USB Storage")
+    updateErrorLog("No USB Storage")
     for i in range(10):
 
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 2
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 3
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
@@ -117,21 +117,22 @@ def errorUSBStorage():
 def errorBadFile():
     print("errorBadFile")
     updateErrorLog("Bad File Save")
-    for i in range(10):
+    
+    while(True):
 
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 2
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 3
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
@@ -140,21 +141,25 @@ def errorBadFile():
 def errorBadSynch():
     print("errorBadSynch")
     updateErrorLog("Bad Vid Sync")
-    for i in range(10):
+    ##For this error dump all data to USB
+    
+    shutil.copy("/home/pi/Documents/localVids", "/media/pi/VIDEOS/")
 
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+    while (True):
+
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 2
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.1)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 3
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(1)
@@ -162,22 +167,23 @@ def errorBadSynch():
 #Error signaling some problem in Recording process
 def errorRecording():
     print("errorRecording")
-    updateErrorLog("Bad Vid Sync")
-    for i in range(10):
+    updateErrorLog("Bad Raw Files")
+    shutil.copy("/home/pi/Documents/localVids","/media/pi/VIDEOS")
+    while(True):
 
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 2
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
 
         #dot 3
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(1.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
@@ -185,6 +191,7 @@ def errorRecording():
 
 #A5.7
 def updateErrorLog(errorName):
+  try:
     print("Updating Error Log")
     #os.system("sudo errorName  >> /media/pi/VIDEOS/errorLog.txt")
     #os.popen("sudo 'test'?? /media/pi/VIDEOS/errorLog.txt")
@@ -196,8 +203,14 @@ def updateErrorLog(errorName):
     #usbLog.write(errorName + " " + str(timeStamp)+"\n")
     sdLog.write(errorName + " " + str(timeStamp)+"\n")
     sdLog.close()
-    shutil.copy("/home/pi/Documents/localVids/errorLog.txt", "/media/pi/VIDEOS/")
+    if(os.path.exists("/media/pi/VIDEOS")):
+       print("usb path detected")
+       shutil.copy("/home/pi/Documents/localVids/errorLog.txt", "/media/pi/VIDEOS/")
     print(errorName)
-
+    return True
     #usbLog.close()
     #sdLog.close()
+  except:
+    return False
+
+#errorFaceCam()

@@ -103,7 +103,6 @@ def prepLocalStorage():
 def finishInitialization():
     #calls LEDControl.turnGreen() function
     os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnGreen()'")
-    print("Waiting for Button Press to Start Recording")
     return True
 
 

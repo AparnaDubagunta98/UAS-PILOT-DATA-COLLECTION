@@ -35,7 +35,7 @@ def synchronizeVideos(duration):
         fastMerged = timeStamp + "fastMerged.mp4"
     	# use filter complex and stack videos side by side
         os.system("sudo ffmpeg -loglevel panic -i " + localPath + "/" + fileNameList[0] + " -i "+ localPath + "/" + fileNameList[1] + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + presentPath + "/" + fastMerged)
-        print("Processing Phase 1 Done")
+        print("Processing Phase 1 : Merging Done")
     except:
         os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorBadFile()'")
 
@@ -60,6 +60,7 @@ def synchronizeVideos(duration):
         os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorBadSynch()'")
     #print("merged ? " ,os.path.exists(localPath + "/" + mergedVideo))
     #print("fast merged ? ", os.path.exists(localPath + "/" +fastMerged))
+    print("Processing Phase 2 : Scaling Done")
     print("Synchronization of videos Complete \n")
     os.system("rm -f "+ presentPath + "/" + fastMerged)
     #os.system("sudo mv " + presentPath + "/" + mergedVideo + " " + localPath)

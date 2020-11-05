@@ -6,7 +6,7 @@
 #    --- common var : time stamp, video streams ---
 #    3.1 Press button to stop ; Save files ; Get Stop time
 #    3.2 Verify
-#    3.3 change LED to Blue (now processing)
+#    3.3 Turn LED off (Recording Finished)
 from vidgear.gears import VideoGear
 from vidgear.gears import WriteGear
 import cv2
@@ -156,10 +156,9 @@ def verifyRecordings():
         #os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorBadFile()'")
         return False
 
-#A3.3 - Changes LED to blue to signal recording has ended and processing will begin
-def changeLEDtoBlue():
-    os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnBlue()'")
-    print("changeLEDtoBlue")
+#A3.3 - Turns the LED off to signal recording has finished
+def turnLEDOff():
+    os.system("sudo python3 -c 'import LEDControl ;LEDControl.LEDControl.turnCustom(0, 0, 0)'")
     #return
 
 
@@ -207,8 +206,8 @@ def Recording():
     startRecording()
 
     #print("startRecording finished")
-    #time.sleep(2)
-
+    turnLEDOff()
+    
     #print("Testing stopRecording")
     stopRecording()
     #print("stopRecording finished")
@@ -219,7 +218,7 @@ def Recording():
     #print(vR)
     #print("Verifying Recordings finished: ",vr)
 
-    changeLEDtoBlue()
+
 
     #get duration for processing
     duration = stopTime-startTime

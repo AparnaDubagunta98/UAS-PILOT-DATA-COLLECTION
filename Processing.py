@@ -11,6 +11,7 @@ import pathlib
 import subprocess
 import ErrorHandling
 import shutil
+import LEDControl
 
 #path for USB drive
 usbPath = "/media/pi/VIDEOS"
@@ -19,6 +20,10 @@ presentPath = "/home/pi/Desktop/Codebase"
 localPath = "/home/pi/Documents/localVids"
 
 
+#A3.3 - Changes LED to blue to signal processing has begun
+def changeLEDtoBlue():
+    os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnBlue()'")
+    print("changeLEDtoBlue")
 
 #Helper Function for A4.1
 def getVideoLength(videoFile):
@@ -87,7 +92,7 @@ def exportVideos():
             #os.makedirs(dest_path)
             os.system("sudo mkdir " + destPath)
         for f in fileNameList:
-            #os.system("sudo cp " + localPath + "/" + f + "" 
+            #os.system("sudo cp " + localPath + "/" + f + ""
             srcPath = localPath + "/" + f
             shutil.copy(srcPath, destPath)
         return True
@@ -96,28 +101,26 @@ def exportVideos():
 	#os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorUSBStorage()'")
 
 
-
 ## Main ##
 def Processing(fnl,duration):
-        print("Starting Processing")
-        print("Duration of Recording = ",duration)
-        global timeStamp
-        global fileNameList
-        fileNameList = fnl
-        print("Files : "+','.join(fileNameList))
-        ts = time.time()
-        timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
-        synchronizeVideos(duration)
-        vr = verifySynchedVideos()
-        exportVideos()
-        return vr
+    #change LED to blue to indicate Processing started
+    changeLEDtoBlue();
+    print("Starting Processing")
+    print("Duration of Recording = ",duration)
+    global timeStamp
+    global fileNameList
+    fileNameList = fnl
+    print("Files : "+','.join(fileNameList))
+    ts = time.time()
+    timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
+    synchronizeVideos(duration)
+    vr = verifySynchedVideos()
+    exportVideos()
+    return vr
 
 fileNameList = []
 timeStamp = ""
-# Note : make time Stamp uniform 
-
-
-
+# Note : make time Stamp uniform
 
 
 #ts = time.time()

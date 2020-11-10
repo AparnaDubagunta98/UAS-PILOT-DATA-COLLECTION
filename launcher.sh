@@ -1,5 +1,5 @@
 #!/bin/sh
 
 cd /
-cd home/pi/Desktop/git/UASDataCollection
-python3 UAS.py
+cd home/pi/Desktop/Codebase
+python3 UAS_driver.py

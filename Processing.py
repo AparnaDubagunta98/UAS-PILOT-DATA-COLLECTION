@@ -1,3 +1,10 @@
+# UAS Pilot Data Collection Tool
+# CSCE 483 - Texas A&M University Fall 2020
+# Christopher Wray, Jordan Griffin, Samuel Sells, Venkata Dubagunta
+# This code was created for our senior design project intended for UAS Pilot Researchers
+# Code was inherited from Spring 2020 Team : Rahul Rana, Aranpreet Gill, Maria Tyas, Juan Minor, Adolfo Herrera
+# Previous team version available at : https://github.com/AparnaDubagunta98/UAS-PILOT-DATA-COLLECTION/tree/master/LEGACY
+
 #A4 Processing.py
 #Function Definitions:
 #  4.1 Sync with ffmpeg
@@ -88,7 +95,7 @@ def exportVideos():
             #os.makedirs(dest_path)
             os.system("sudo mkdir " + destPath)
         for f in fileNameList:
-            #os.system("sudo cp " + localPath + "/" + f + "" 
+            #os.system("sudo cp " + localPath + "/" + f + ""
             srcPath = localPath + "/" + f
             shutil.copy(srcPath, destPath)
         return True
@@ -115,7 +122,7 @@ def Processing(fnl,duration):
 
 fileNameList = []
 timeStamp = ""
-# Note : make time Stamp uniform 
+# Note : make time Stamp uniform
 
 
 

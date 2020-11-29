@@ -1,3 +1,10 @@
+# UAS Pilot Data Collection Tool
+# CSCE 483 - Texas A&M University Fall 2020
+# Christopher Wray, Jordan Griffin, Samuel Sells, Venkata Dubagunta
+# This code was created for our senior design project intended for UAS Pilot Researchers
+# Code was inherited from Spring 2020 Team : Rahul Rana, Aranpreet Gill, Maria Tyas, Juan Minor, Adolfo Herrera
+# Previous team version available at : https://github.com/AparnaDubagunta98/UAS-PILOT-DATA-COLLECTION/tree/master/LEGACY
+
 #UNIT TESTING CODE FOR A1 - A4
 import DeviceInitialization
 import Recording
@@ -9,7 +16,7 @@ import subprocess
 print("UNIT TEST A1 : DEVICE INITIALIZATION")
 print("INPUTS : None")
 print("EXPECTED OUTPUT :0")
-print("\n") 
+print("\n")
 outputA1 = DeviceInitialization.DeviceInitialization()
 print("\n")
 print("OUTPUT A1 : ",outputA1)
@@ -56,4 +63,3 @@ if(outputA4 == True):
 elif(outputA4 == False):
     print("UNIT TEST A4 PROCESSING STATUS : FAIL")
 print("\n")
-

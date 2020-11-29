@@ -1,3 +1,10 @@
+# UAS Pilot Data Collection Tool
+# CSCE 483 - Texas A&M University Fall 2020
+# Christopher Wray, Jordan Griffin, Samuel Sells, Venkata Dubagunta
+# This code was created for our senior design project intended for UAS Pilot Researchers
+# Code was inherited from Spring 2020 Team : Rahul Rana, Aranpreet Gill, Maria Tyas, Juan Minor, Adolfo Herrera
+# Previous team version available at : https://github.com/AparnaDubagunta98/UAS-PILOT-DATA-COLLECTION/tree/master/LEGACY
+
 A4
 https://unix.stackexchange.com/questions/233832/merge-two-video-clips-into-one-placing-them-next-to-each-other
 https://trac.ffmpeg.org/wiki/How%20to%20speed%20up%20/%20slow%20down%20a%20video

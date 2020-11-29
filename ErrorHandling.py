@@ -12,29 +12,36 @@ import datetime
 import time
 import shutil
 
+numCycles = 3
+dotOn = 0.1
+dotOff = 0.2
+dashOn = 0.4
+dashOff = 0.2
+endTime = 1
+
 #A5.1
 def errorFaceCam():
     print("errorFaceCam")
     updateErrorLog("No Face Cam detected")
 
-    for i in range(10):
+    for i in range(numCycles):
         #dot 1
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.5)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dotOff)
 
         #dot 2
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.5)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dotOff)
 
         #dot 3
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.5)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(endTime)
 
     os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
 
@@ -44,24 +51,24 @@ def errorTabletCam():
     print("errorTabletCam")
     updateErrorLog("Tablet Cam not detected")
 
-    for i in range(10):
+    for i in range(numCycles):
         #dot 1
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.1)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dotOff)
 
         #dot 2
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.1)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dotOff)
 
-        #dot 3
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1)
+        sleep(dashOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(1)
+        sleep(endTime)
 
 
 
@@ -70,48 +77,49 @@ def errorUSBDetect():
     print("errorUSBDetect")
     updateErrorLog("No USB Detected")
 
-    for i in range(10):
+    for i in range(numCycles):
 
-        #dot 1
+        #dot
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.5)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dotOff)
 
-        #dot 2
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1.5)
+        sleep(dashOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dashOff)
 
-        #dot 3
+        #dot
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.5)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(endTime)
 
 #A5.4
 def errorUSBStorage():
     print("errorUSBStorage")
     updateErrorLog("No USB Storage")
-    for i in range(10):
+    for i in range(numCycles):
 
+        #dot
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.5)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dotOff)
 
-        #dot 2
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1.5)
+        sleep(dashOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dashOff)
 
-        #dot 3
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1.5)
+        sleep(dashOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(endTime)
 
 #A5.5
 def errorBadFile():
@@ -120,22 +128,23 @@ def errorBadFile():
     
     while(True):
 
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1.5)
+        sleep(dashOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dashOff)
 
-        #dot 2
+        #dot
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.5)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dotOff)
 
-        #dot 3
+        #dot
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.5)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(endTime)
 
 #A5.6
 def errorBadSynch():
@@ -147,22 +156,23 @@ def errorBadSynch():
 
     while (True):
 
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1)
+        sleep(dashOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dashOff)
 
-        #dot 2
+        #dot
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(.1)
+        sleep(dotOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(dotOff)
 
-        #dot 3
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1)
+        sleep(dashOn)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(1)
+        sleep(endTime)
 
 #Error signaling some problem in Recording process
 def errorRecording():
@@ -171,22 +181,23 @@ def errorRecording():
     shutil.copy("/home/pi/Documents/localVids","/media/pi/VIDEOS")
     while(True):
 
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1.5)
-        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
         sleep(.5)
+        os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
+        sleep(.1)
 
-        #dot 2
+        #dash
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
         sleep(.5)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(.1)
 
-        #dot 3
+        #dot
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnOrange()'")
-        sleep(1.5)
+        sleep(.1)
         os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnCustom(0, 0, 0)'")
-        sleep(.5)
+        sleep(1)
 
 
 #A5.7
@@ -204,9 +215,9 @@ def updateErrorLog(errorName):
     sdLog.write(errorName + " " + str(timeStamp)+"\n")
     sdLog.close()
     if(os.path.exists("/media/pi/VIDEOS")):
-       print("Exporting to USB")
+       print("usb path detected")
        shutil.copy("/home/pi/Documents/localVids/errorLog.txt", "/media/pi/VIDEOS/")
-    #print(errorName)
+    print(errorName)
     return True
     #usbLog.close()
     #sdLog.close()

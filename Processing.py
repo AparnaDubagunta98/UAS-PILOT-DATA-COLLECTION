@@ -11,7 +11,6 @@ import pathlib
 import subprocess
 import ErrorHandling
 import shutil
-import LEDControl
 
 #path for USB drive
 usbPath = "/media/pi/VIDEOS"
@@ -20,15 +19,11 @@ presentPath = "/home/pi/Desktop/Codebase"
 localPath = "/home/pi/Documents/localVids"
 
 
-#A3.3 - Changes LED to blue to signal processing has begun
-def changeLEDtoBlue():
-    os.system("sudo python3 -c 'import LEDControl ;LEDControl.turnBlue()'")
-    print("changeLEDtoBlue")
 
 #Helper Function for A4.1
 def getVideoLength(videoFile):
     #print("in get vid len: ",videoFile)
-    f = presentPath + "/" + videoFile
+    f = localPath + "/" + videoFile
     result = subprocess.run(["ffprobe","-v","error","-show_entries","format=duration","-of","default=noprint_wrappers=1:nokey=1",f],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     return float(result.stdout)
 #A4.1
@@ -39,8 +34,8 @@ def synchronizeVideos(duration):
     	# create merged file
         fastMerged = timeStamp + "fastMerged.mp4"
     	# use filter complex and stack videos side by side
-        os.system("sudo ffmpeg -loglevel panic -i " + localPath + "/" + fileNameList[0] + " -i "+ localPath + "/" + fileNameList[1] + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + presentPath + "/" + fastMerged)
-        print("Processing Phase 1 : Merging Done")
+        os.system("sudo ffmpeg -loglevel panic -i " + localPath + "/" + fileNameList[0] + " -i "+ localPath + "/" + fileNameList[1] + " -filter_complex \"[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w\" " + localPath + "/" + fastMerged)
+        print("Processing Phase 1 Done")
     except:
         os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorBadFile()'")
 
@@ -48,26 +43,26 @@ def synchronizeVideos(duration):
     #try:
     #final merged file to be exported and used
     #print("Phase 2")
+    fileNameList.append(fastMerged)
     mergedVideo = timeStamp + "merged.mp4"
     fileNameList.append(mergedVideo)
     #print("slowing down")
     # slow video down
     vidLength = getVideoLength(fastMerged)
-   # print("video length: ",vidLength)
+    #print("video length: ",vidLength)
     ### test with diff formula ###
     #return True
     #except:
        # return False
     slowingFactor = duration/vidLength
     try:
-        os.system("sudo ffmpeg -loglevel panic -i " + presentPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + mergedVideo)
+        os.system("sudo ffmpeg -loglevel panic -i " + localPath + "/" + fastMerged + " -vf setpts=" + str(slowingFactor) + "*PTS " + localPath + "/" + mergedVideo)
     except:
         os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorBadSynch()'")
     #print("merged ? " ,os.path.exists(localPath + "/" + mergedVideo))
     #print("fast merged ? ", os.path.exists(localPath + "/" +fastMerged))
-    print("Processing Phase 2 : Scaling Done")
     print("Synchronization of videos Complete \n")
-    os.system("rm -f "+ presentPath + "/" + fastMerged)
+    #os.system("rm -f "+ presentPath + "/" + fastMerged)
     #os.system("sudo mv " + presentPath + "/" + mergedVideo + " " + localPath)
     #ErrorHandling.errorBadSynch()
 
@@ -93,7 +88,7 @@ def exportVideos():
             #os.makedirs(dest_path)
             os.system("sudo mkdir " + destPath)
         for f in fileNameList:
-            #os.system("sudo cp " + localPath + "/" + f + ""
+            #os.system("sudo cp " + localPath + "/" + f + "" 
             srcPath = localPath + "/" + f
             shutil.copy(srcPath, destPath)
         return True
@@ -102,27 +97,28 @@ def exportVideos():
 	#os.system("sudo python3 -c 'import ErrorHandling;ErrorHandling.errorUSBStorage()'")
 
 
+
 ## Main ##
 def Processing(fnl,duration):
-
-    print("Starting Processing")
-    #change LED to blue to indicate Processing started
-    changeLEDtoBlue();
-    print("Duration of Recording = ",duration)
-    global timeStamp
-    global fileNameList
-    fileNameList = fnl
-    print("Files : "+','.join(fileNameList))
-    ts = time.time()
-    timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
-    synchronizeVideos(duration)
-    vr = verifySynchedVideos()
-    exportVideos()
-    return vr
+        print("Starting Processing")
+        print("Duration of Recording = ",duration)
+        global timeStamp
+        global fileNameList
+        fileNameList = fnl
+        print("Files : "+','.join(fileNameList))
+        ts = time.time()
+        timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
+        synchronizeVideos(duration)
+        vr = verifySynchedVideos()
+        exportVideos()
+        return vr
 
 fileNameList = []
 timeStamp = ""
-# Note : make time Stamp uniform
+# Note : make time Stamp uniform 
+
+
+
 
 
 #ts = time.time()
